@@ -11,13 +11,8 @@ import laxa.multithreading.framework.characteristics.*;
 @WriteOrder(Fairness.UNFAIR_READ_OPTIMIZATION)
 @Case_R$WR(fairness = Fairness.FAIR, value = "second reader will wait")
 @Case_W$RW(fairness = Fairness.UNFAIR_READ_OPTIMIZATION, value = "next will be writer")
-public class T03_StrategyWrite implements Strategy {
+public class T03_StrategyWrite implements RwStrategy {
 	private Object o;
-
-	@Override
-	public String getName() {
-		return "[Write  ]";
-	}
 
 	private final Object wLock = new Object();
 	private int wantW = 0;
@@ -32,7 +27,8 @@ public class T03_StrategyWrite implements Strategy {
 			Thread.currentThread().interrupt();
 		}
 	}
-	
+
+	@Override
 	public void write(Object o) {
 		synchronized (wLock) {
 			wantW++;
@@ -64,6 +60,7 @@ public class T03_StrategyWrite implements Strategy {
 		}
 	}
 
+	@Override
 	public Object read() {
 		synchronized (wLock) {
 //			ThreadHelper.log("try to read. wantW="+ wantW);

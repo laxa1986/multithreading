@@ -14,15 +14,12 @@ import java.util.concurrent.locks.ReentrantLock;
 @WriteOrder(Fairness.UNDEFINED)
 @Case_R$WR(fairness = Fairness.UNDEFINED, value = "next will be ?")
 @Case_W$RW(fairness = Fairness.UNDEFINED, value = "next will be ?")
-public class T05_ReentrantLock implements Strategy {
-	@Override
-	public String getName() {
-		return "[Reentr.]";
-	}
+public class T05_ReentrantLock implements RwStrategy {
 
 	Lock lock = new ReentrantLock(false /* not fair */);
 	private Object o;
 
+	@Override
 	public void write(Object o) {
 		lock.lock();
 		try {
@@ -33,6 +30,7 @@ public class T05_ReentrantLock implements Strategy {
 		}
 	}
 
+	@Override
 	public Object read() {
 		lock.lock();
 		try {

@@ -11,19 +11,16 @@ import laxa.multithreading.framework.characteristics.*;
 @WriteOrder(Fairness.UNFAIR_THREAD_PRIORITIES)
 @Case_R$WR(fairness = Fairness.UNFAIR_THREAD_PRIORITIES, value = "next will be ? (both R & W wait on synchronized method)")
 @Case_W$RW(fairness = Fairness.UNFAIR_THREAD_PRIORITIES, value = "next will be ? (both R & W wait on synchronized method)")
-public class T01_Synchronized implements Strategy {
+public class T01_Synchronized implements RwStrategy {
 	private Object o;
 
 	@Override
-	public String getName() {
-		return "[Sync   ]";
-	}
-
 	public synchronized void write(Object o) {
 		ThreadHelper.doIt();
 		this.o = o;
 	}
 
+	@Override
 	public synchronized Object read() {
 		ThreadHelper.doIt();
 		return o;

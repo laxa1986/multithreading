@@ -1,6 +1,6 @@
 package laxa.multithreading.framework.characteristics;
 
-import laxa.multithreading.task.readwrite.strategy.Strategy;
+import laxa.multithreading.task.readwrite.strategy.RwStrategy;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -14,5 +14,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.TYPE)
 public @interface BestStrategy {
-	Class<? extends Strategy>[] value();
+	Class<? extends RwStrategy>[] value();
 }

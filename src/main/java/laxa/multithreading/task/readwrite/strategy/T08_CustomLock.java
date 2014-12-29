@@ -10,13 +10,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * Author: Chekulaev Alexey
  * Date: 18.03.12
  */
-public class T08_CustomLock implements Strategy {
+public class T08_CustomLock implements RwStrategy {
 	private Object o;
-
-	@Override
-	public String getName() {
-		return "[Custom ]";
-	}
 
 	private Lock rLock = new ReentrantLock(false /* unfair */);
 	private Condition condition = rLock.newCondition();
@@ -30,6 +25,7 @@ public class T08_CustomLock implements Strategy {
 		}
 	}
 
+	@Override
 	public void write(Object o) {
 		rLock.lock();
 		try {
@@ -47,6 +43,7 @@ public class T08_CustomLock implements Strategy {
 		}
 	}
 
+	@Override
 	public Object read() {
 		rLock.lock();
 		try {

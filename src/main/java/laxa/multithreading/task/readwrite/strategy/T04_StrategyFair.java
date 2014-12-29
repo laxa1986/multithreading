@@ -14,13 +14,8 @@ import java.util.Deque;
 @WriteOrder(Fairness.FAIR)
 @Case_R$WR(fairness = Fairness.FAIR, value = "second reader will wait")
 @Case_W$RW(fairness = Fairness.FAIR, value = "next will be reader")
-public class T04_StrategyFair implements Strategy {
+public class T04_StrategyFair implements RwStrategy {
 	private Object o;
-
-	@Override
-	public String getName() {
-		return "[SynFair]";
-	}
 
 	private static interface Monitor {}
 
@@ -99,6 +94,7 @@ public class T04_StrategyFair implements Strategy {
 		}
 	}
 
+	@Override
 	public void write(Object o) {
 //		ThreadHelper.log("enter write");
 		WriteMonitor wMonitor = new WriteMonitor();
@@ -121,6 +117,7 @@ public class T04_StrategyFair implements Strategy {
 		}
 	}
 
+	@Override
 	public Object read() {
 //		ThreadHelper.log("enter read");
 		ReadMonitor rMonitor;

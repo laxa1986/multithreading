@@ -5,6 +5,8 @@ package laxa.multithreading.framework;
  * Date: 20.01.2012
  */
 public final class ThreadHelper {
+	public static final ThreadLocal<Integer> durationHolder = new ThreadLocal<>();
+
 	private ThreadHelper(){}
 
 	public static void sleep(int time) {
@@ -15,10 +17,13 @@ public final class ThreadHelper {
 		}
 	}
 
+	public static void setDuration(int duration) {
+		durationHolder.set(duration);
+	}
+
 	public static void doIt() {
-		Action action = StrategyExecutor.actionHolder.get();
-		int duration = action.duration();
-		if (duration > 0) {
+		Integer duration = durationHolder.get();
+		if (duration != null && duration > 0) {
 			sleep(duration);
 		}
 	}

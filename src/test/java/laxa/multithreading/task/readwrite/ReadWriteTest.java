@@ -19,13 +19,13 @@ public class ReadWriteTest {
 
     @Test
     public void testAll() throws Exception {
-        new TestRunner(new T01_Synchronized()).test(scenarios);
-        new TestRunner(new T02_StrategyRead()).test(scenarios);
-        new TestRunner(new T03_StrategyWrite()).test(scenarios);
-        new TestRunner(new T04_StrategyFair()).test(scenarios);
-        new TestRunner(new T05_ReentrantLock()).test(scenarios);
-        new TestRunner(new T06_RWLock()).test(scenarios);
-        new TestRunner(new T07_RWLockFair()).test(scenarios);
-        new TestRunner(new T08_CustomLock()).test(scenarios);
+        new TestRunner().test(scenarios, new T01_Synchronized());
+        new TestRunner().test(scenarios, new T02_StrategyRead());
+        new TestRunner().test(scenarios, new T03_StrategyWrite());
+        new TestRunner().test(scenarios, new T04_StrategyFair());
+        new TestRunner().test(scenarios, new T05_ReentrantLock());
+        new TestRunner().test(scenarios, new T06_RWLock());
+        new TestRunner().test(scenarios, new T07_RWLockFair());
+        new TestRunner().test(scenarios, new T08_CustomLock());
     }
 }

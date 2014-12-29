@@ -10,7 +10,7 @@ public class ReadAction extends RWAction {
 	}
 
 	@Override
-	public boolean isRead() {
+	protected final boolean isRead() {
 		return true;
 	}
 }

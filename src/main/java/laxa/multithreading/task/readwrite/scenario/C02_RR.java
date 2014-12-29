@@ -1,14 +1,14 @@
 package laxa.multithreading.task.readwrite.scenario;
 
-import laxa.multithreading.framework.Action;
-import laxa.multithreading.framework.Scenario;
+import laxa.multithreading.framework.FixedScenario;
 import laxa.multithreading.task.readwrite.action.R;
+import laxa.multithreading.task.readwrite.strategy.RwStrategy;
 
 /**
  * Author: Chekulaev Alexey
  * Date: 09.03.12
  */
-public class C02_RR implements Scenario {
+public class C02_RR extends FixedScenario<RwStrategy> {
 	@Override
 	public int getFastest() {
 		return 100;

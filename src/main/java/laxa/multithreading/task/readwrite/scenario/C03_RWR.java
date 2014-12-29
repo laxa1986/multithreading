@@ -1,10 +1,10 @@
 package laxa.multithreading.task.readwrite.scenario;
 
-import laxa.multithreading.framework.Action;
-import laxa.multithreading.framework.Scenario;
+import laxa.multithreading.framework.FixedScenario;
 import laxa.multithreading.framework.characteristics.BestStrategy;
 import laxa.multithreading.task.readwrite.action.R;
 import laxa.multithreading.task.readwrite.action.W;
+import laxa.multithreading.task.readwrite.strategy.RwStrategy;
 import laxa.multithreading.task.readwrite.strategy.T02_StrategyRead;
 
 /**
@@ -12,7 +12,7 @@ import laxa.multithreading.task.readwrite.strategy.T02_StrategyRead;
  * Date: 08.03.12
  */
 @BestStrategy(T02_StrategyRead.class)
-public class C03_RWR implements Scenario {
+public class C03_RWR extends FixedScenario<RwStrategy> {
 	@Override
 	public int getFastest() {
 		return 100 + 50 + 100;

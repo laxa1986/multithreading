@@ -1,7 +1,7 @@
 package laxa.multithreading.task.readwrite.scenario;
 
-import laxa.multithreading.framework.Action;
 import laxa.multithreading.framework.Scenario;
+import laxa.multithreading.framework.Strategy;
 
 /**
  * Author: Chekulaev Alexey
@@ -9,9 +9,14 @@ import laxa.multithreading.framework.Scenario;
  */
 public class RandomScenario implements Scenario {
 	@Override
-	public int getFastest() {
-		return 0;
+	public void run(Strategy strategy) {
+		// TODO
 	}
+
+	//	@Override
+//	public int getFastest() {
+//		return 0;
+//	}
 	//	private static Random generator = new Random(System.currentTimeMillis());
 //	private boolean writer;
 //
@@ -44,8 +49,8 @@ public class RandomScenario implements Scenario {
 //
 //	private static Random random = new Random(System.currentTimeMillis());
 
-	@Override
-	public Action[] getActions() {
-		return null;
-	}
+//	@Override
+//	public Action[] getActions() {
+//		return null;
+//	}
 }
