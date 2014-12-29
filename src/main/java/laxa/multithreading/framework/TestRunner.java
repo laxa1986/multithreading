@@ -1,26 +1,38 @@
 package laxa.multithreading.framework;
 
-import laxa.multithreading.task.readwrite.scenario.*;
-import laxa.multithreading.task.readwrite.strategy.*;
+import laxa.multithreading.task.readwrite.strategy.Strategy;
 
 import java.util.Date;
+import java.util.concurrent.CountDownLatch;
 
 public final class TestRunner {
-	private static Scenario scenario;
+	private Strategy strategy;
 	
-	private static void setScenario(Scenario scenario) {
-		TestRunner.scenario = scenario;
-		System.out.println("*** " + scenario.getClass().getSimpleName() + " *** " + scenario.getFastest());
+	public TestRunner(Strategy strategy) {
+		this.strategy = strategy;
+//		System.out.println("*** " + scenario.getClass().getSimpleName() + " *** " + scenario.getFastest());
 	}
 
-	@SuppressWarnings("deprecation")
-	private static void testImpl(Strategy strategy) throws Exception {
+	private CountDownLatch latch;
+
+	public void test(Scenario scenario) {
 		Action[] actions = scenario.getActions();
 
+		latch = new CountDownLatch(actions.length);
 		Thread[] threads = new Thread[actions.length];
 		for (int i=0; i<actions.length; i++) {
-			Action action = actions[i];
-			Runnable runnable = new StrategyExecutor(strategy, action);
+			final Action action = actions[i];
+			Runnable runnable = new Runnable() {
+				@Override
+				public void run() {
+					try {
+						latch.await();
+					} catch (InterruptedException e) {
+						return;
+					}
+					new StrategyExecutor(strategy, action).run();
+				}
+			};
 			Thread thread = new Thread(runnable);
 			threads[i] = thread;
 		}
@@ -30,46 +42,20 @@ public final class TestRunner {
 			thread.start();
 		}
 		for (Thread thread : threads) {
-			thread.join();
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
 		}
 		Date end = new Date();
 		Date duration = new Date(end.getTime() - start.getTime());
 		System.out.println(strategy.getName() + " duration: " + duration.getTime() + "ms (" + duration.getSeconds() + "s " + duration.getTime()%1000 + "ms)");
 	}
-	
-	private static void CR() {
-		System.out.println();
-	}
 
-	private static void fullTest(Scenario scenario) throws Exception {
-		testImpl(new T01_Synchronized());
-		testImpl(new T05_ReentrantLock()); CR();
-
-		testImpl(new T02_StrategyRead());
-		testImpl(new T06_RWLock()); CR();
-
-		testImpl(new T03_StrategyWrite()); CR();
-
-		testImpl(new T04_StrategyFair());
-		testImpl(new T07_RWLockFair()); CR();
-	}
-
-	private static void testScenario(Scenario scenario) throws Exception {
-		setScenario(scenario); CR();
-
-//		fullTest(scenario);
-
-		testImpl(new T02_StrategyRead());
-		testImpl(new T08_CustomLock()); CR();
-	}
-
-	public static void main(String[] args) throws Exception {
-		testScenario(new C02_RR());
-		testScenario(new C03_RWR());
-		testScenario(new C04_W$RW_R());
-		testScenario(new C05_W$WR_R());
-		testScenario(new C06_R$WR_R());
-		testScenario(new C07_R$WRW_R());
-//		testScenario(new SimpleActionsScenario());
+	public void test(Scenario[] scenarios) {
+		for (Scenario scenario : scenarios) {
+			test(scenario);
+		}
 	}
 }
