@@ -6,27 +6,48 @@ public final class TestRunner {
 	public TestRunner() {
 	}
 
-	public <S extends Strategy> void test(Scenario<S> scenario, S strategy) {
-		System.out.println("*** " + scenario.getClass().getSimpleName() + (scenario instanceof FixedScenario ? " *** " + ((FixedScenario)scenario).getFastest() : ""));
+	private static void CR() {
+		System.out.println();
+	}
 
+	public <S extends Strategy> Date test(Scenario<S> scenario, S strategy) {
 		Date start = new Date();
 
 		scenario.run(strategy);
 
 		Date end = new Date();
-		Date duration = new Date(end.getTime() - start.getTime());
-		System.out.println(strategy.getClass().getSimpleName() + " duration: " + duration.getTime() + "ms (" + duration.getSeconds() + "s " + duration.getTime() % 1000 + "ms)");
+		return new Date(end.getTime() - start.getTime());
 	}
 
-	public <S extends Strategy> void test(Scenario<S>[] scenarios, S strategy) {
+	public <S extends Strategy> void testStrategy(Scenario<S>[] scenarios, S strategy) {
+		System.out.println("Test strategy " + formatStrategy(strategy));
+
 		for (Scenario<S> scenario : scenarios) {
-			test(scenario, strategy);
+			Date duration = test(scenario, strategy);
+			System.out.println(scenario.getClass().getSimpleName() + " duration: " + formatDuration(duration));
 		}
+		CR();
 	}
 
-	public <S extends Strategy> void test(Scenario<S> scenario, S[] strategies) {
+	public <S extends Strategy> void testScenario(Scenario<S> scenario, S[] strategies) {
+		System.out.println("Test scenario " + formatScenario(scenario));
+
 		for (S strategy : strategies) {
-			test(scenario, strategy);
+			Date duration = test(scenario, strategy);
+			System.out.println(formatStrategy(strategy) + " duration: " + formatDuration(duration));
 		}
+		CR();
+	}
+
+	private static String formatDuration(Date duration) {
+		return duration.getTime() + "ms (" + duration.getSeconds() + "s " + duration.getTime() % 1000 + "ms)";
+	}
+
+	private static String formatScenario(Scenario scenario) {
+		return scenario.getClass().getSimpleName() + scenario.getClass().getSimpleName() + (scenario instanceof FixedScenario ? " *** " + ((FixedScenario)scenario).getFastest() : "");
+	}
+
+	private static String formatStrategy(Strategy strategy) {
+		return strategy.getClass().getSimpleName();
 	}
 }

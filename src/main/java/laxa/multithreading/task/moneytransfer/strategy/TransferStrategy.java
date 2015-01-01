@@ -10,4 +10,6 @@ import laxa.multithreading.task.moneytransfer.model.Money;
  */
 public interface TransferStrategy extends Strategy {
     void transfer(Account from, Account to, Money amount);
+
+    Money getMoney(Account account);
 }

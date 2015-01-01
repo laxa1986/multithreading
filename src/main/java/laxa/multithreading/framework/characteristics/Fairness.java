@@ -7,6 +7,8 @@ package laxa.multithreading.framework.characteristics;
 public enum Fairness {
 	UNDEFINED,
 
+	UNFAIR,
+
 	/**
 	 * Unfair. Depend on thread priorities, because of synchronized(monitor)
 	 */
