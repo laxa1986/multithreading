@@ -30,7 +30,6 @@ public class T04_MonitorLock implements TransferStrategy {
                         lockFrom.unlock();
                     }
                 }
-                // we are there
                 try {
                     monitor.wait();
                 } catch (InterruptedException e) {

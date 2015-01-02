@@ -62,7 +62,6 @@ public class T04_MonitorLock2 implements TransferStrategy {
                     }
                 }
             }
-            transfer(from, to, amount);
         }
 
         try {
