@@ -20,7 +20,7 @@ public class T04_MonitorLock implements TransferStrategy {
         Lock lockFrom = lockHolder.getLock(from).writeLock();
         Lock lockTo = lockHolder.getLock(to).writeLock();
 
-        // why wee need such monitor ?
+        // exclude deadlocks
         synchronized (monitor) {
             while (true) {
                 if (lockFrom.tryLock()) {
@@ -83,7 +83,7 @@ public class T04_MonitorLock implements TransferStrategy {
         } finally {
             lock.unlock();
             synchronized (monitor) {
-                monitor.notifyAll();
+                monitor.notifyAll(); // will notify to many
             }
         }
     }
