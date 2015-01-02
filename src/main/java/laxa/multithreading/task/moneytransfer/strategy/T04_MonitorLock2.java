@@ -25,8 +25,8 @@ public class T04_MonitorLock2 implements TransferStrategy {
 
     @Override
     public void transfer(Account from, Account to, Money amount) {
-        ReadWriteLock lockFrom = lockHolder.getLock(from);
-        ReadWriteLock lockTo = lockHolder.getLock(to);
+        ReadWriteLock lockFrom = lockHolder.getLock(from.getId());
+        ReadWriteLock lockTo = lockHolder.getLock(to.getId());
         Lock wLockFrom = lockFrom.writeLock();
         Lock wLockTo = lockTo.writeLock();
 
@@ -82,7 +82,7 @@ public class T04_MonitorLock2 implements TransferStrategy {
 
     @Override
     public Money getMoney(Account account) {
-        ReadWriteLock lock = lockHolder.getLock(account);
+        ReadWriteLock lock = lockHolder.getLock(account.getId());
         Lock rLock = lock.readLock();
         rLock.lock();
         try {

@@ -1,7 +1,5 @@
 package laxa.multithreading.task.moneytransfer.strategy;
 
-import laxa.multithreading.task.moneytransfer.model.Account;
-
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -12,22 +10,22 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * Date: 02.01.2015
  */
 class LockHolder {
-    // TODO: try Map<Long, ReadWriteLock>
-    private final Map<Account, ReadWriteLock> lockMap = new WeakHashMap<>();
+    private final Map<Long, ReadWriteLock> lockMap = new WeakHashMap<>();
 
     /**
      * Thread safe lazy lock creation
-     * @param account account
+     * @param accountId account id
      * @return lock to get access
      */
-    ReadWriteLock getLock(Account account) {
-        ReadWriteLock lock = lockMap.get(account);
+    ReadWriteLock getLock(long accountId) {
+        ReadWriteLock lock = lockMap.get(accountId);
         if (lock == null) {
             synchronized (lockMap) {
-                lock = lockMap.get(account);
+                lock = lockMap.get(accountId);
                 if (lock == null) {
                     lock = new ReentrantReadWriteLock();
-                    lockMap.put(account, lock);
+                    // new Long need to make key eligible for GC
+                    lockMap.put(new Long(accountId), lock);
                 }
             }
         }

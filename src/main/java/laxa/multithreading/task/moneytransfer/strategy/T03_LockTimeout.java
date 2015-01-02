@@ -28,8 +28,8 @@ public class T03_LockTimeout implements TransferStrategy {
 
     @Override
     public void transfer(Account from, Account to, Money amount) {
-        Lock lockFrom = lockHolder.getLock(from).writeLock();
-        Lock lockTo = lockHolder.getLock(to).writeLock();
+        Lock lockFrom = lockHolder.getLock(from.getId()).writeLock();
+        Lock lockTo = lockHolder.getLock(to.getId()).writeLock();
 
         lockFrom.lock();
         try {
@@ -61,7 +61,7 @@ public class T03_LockTimeout implements TransferStrategy {
 
     @Override
     public Money getMoney(Account account) {
-        Lock lock = lockHolder.getLock(account).readLock();
+        Lock lock = lockHolder.getLock(account.getId()).readLock();
         lock.lock();
         try {
             return account.getMoney();
