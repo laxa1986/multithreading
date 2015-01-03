@@ -1,15 +1,15 @@
 package laxa.multithreading.task.readwrite.scenario;
 
 import laxa.multithreading.framework.Scenario;
-import laxa.multithreading.framework.Strategy;
+import laxa.multithreading.task.readwrite.strategy.RwStrategy;
 
 /**
  * Author: Chekulaev Alexey
  * Date: 08.03.12
  */
-public class RandomScenario implements Scenario {
+public class RandomScenario implements Scenario<RwStrategy> {
 	@Override
-	public void run(Strategy strategy) {
+	public void run(RwStrategy strategy) {
 		// TODO
 	}
 

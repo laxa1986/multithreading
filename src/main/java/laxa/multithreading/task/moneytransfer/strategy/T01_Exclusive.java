@@ -3,10 +3,13 @@ package laxa.multithreading.task.moneytransfer.strategy;
 import laxa.multithreading.task.moneytransfer.model.Account;
 import laxa.multithreading.task.moneytransfer.model.Money;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 /**
  * Author: Chekulaev Alexey
  * Date: 30.12.2014
  */
+@ThreadSafe
 public class T01_Exclusive implements TransferStrategy {
     private static final Object lock = new Object();
 

@@ -3,14 +3,16 @@ package laxa.multithreading.task.moneytransfer.strategy;
 import laxa.multithreading.task.moneytransfer.model.Account;
 import laxa.multithreading.task.moneytransfer.model.Money;
 
+import javax.annotation.concurrent.ThreadSafe;
 import java.util.concurrent.locks.Lock;
 
 /**
  * Author: Chekulaev Alexey
  * Date: 02.01.2015
  */
+@ThreadSafe
 public class T02_Sync2 implements TransferStrategy {
-    private LockHolder lockHolder = new LockHolder();
+    private final LockHolder lockHolder = new LockHolder();
 
     @Override
     public void transfer(Account from, Account to, Money amount) {

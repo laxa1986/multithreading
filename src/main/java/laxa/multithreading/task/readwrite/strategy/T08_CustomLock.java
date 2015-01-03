@@ -2,6 +2,8 @@ package laxa.multithreading.task.readwrite.strategy;
 
 import laxa.multithreading.framework.ThreadHelper;
 
+import javax.annotation.concurrent.GuardedBy;
+import javax.annotation.concurrent.ThreadSafe;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -10,12 +12,19 @@ import java.util.concurrent.locks.ReentrantLock;
  * Author: Chekulaev Alexey
  * Date: 18.03.12
  */
+@ThreadSafe
 public class T08_CustomLock implements RwStrategy {
-	private Object o;
+	private volatile Object o;
 
-	private Lock rLock = new ReentrantLock(false /* unfair */);
-	private Condition condition = rLock.newCondition();
+	private final Lock rLock;
+	private final Condition condition;
+	@GuardedBy("rLock")
 	private volatile int rCnt = 0; // this variable not in synchronized section
+
+	public T08_CustomLock(boolean fair) {
+		rLock = new ReentrantLock(fair);
+		condition = rLock.newCondition();
+	}
 
 	private void wait(Condition condition) {
 		try {

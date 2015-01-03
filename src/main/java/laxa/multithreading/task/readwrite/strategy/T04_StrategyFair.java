@@ -3,6 +3,7 @@ package laxa.multithreading.task.readwrite.strategy;
 import laxa.multithreading.framework.ThreadHelper;
 import laxa.multithreading.framework.characteristics.*;
 
+import javax.annotation.concurrent.ThreadSafe;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -10,6 +11,7 @@ import java.util.Deque;
  * Author: Chekulaev Alexey
  * Date: 04.03.12
  */
+@ThreadSafe
 @Throughput(Throughput.Value.MIDDLE)
 @WriteOrder(Fairness.FAIR)
 @Case_R$WR(fairness = Fairness.FAIR, value = "second reader will wait")
@@ -20,7 +22,7 @@ public class T04_StrategyFair implements RwStrategy {
 	private static interface Monitor {}
 
 	private static final class ReadMonitor implements Monitor {
-		private int cnt = 1;
+		int cnt = 1;
 	}
 	
 	private static final class WriteMonitor implements Monitor {
@@ -77,7 +79,7 @@ public class T04_StrategyFair implements RwStrategy {
 				}
 			}
 			if (loggedQueue.length()>0) {
-				return " > " + loggedQueue.substring(0, loggedQueue.length()-1).toString();
+				return " > " + loggedQueue.substring(0, loggedQueue.length()-1);
 			} else {
 				return "";
 			}
@@ -97,6 +99,7 @@ public class T04_StrategyFair implements RwStrategy {
 	@Override
 	public void write(Object o) {
 //		ThreadHelper.log("enter write");
+		// TODO: check!!!
 		WriteMonitor wMonitor = new WriteMonitor();
 		synchronized (queue) {
 			queue.offer(wMonitor);

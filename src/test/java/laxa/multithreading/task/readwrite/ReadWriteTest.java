@@ -12,7 +12,7 @@ import org.junit.Test;
  * Date: 26.12.2014
  */
 public class ReadWriteTest {
-    private final Scenario[] scenarios = new Scenario[]{new C02_RR(), new C03_RWR(), new C04_W$RW_R(), new C05_W$WR_R(), new C06_R$WR_R(), new C07_R$WRW_R()};
+    private final Scenario[] scenarios = new Scenario[]{new S02_RR(), new S03_RWR(), new S04_W$RW_R(), new S05_W$WR_R(), new S06_R$WR_R(), new S07_R$WRW_R()};
 
     private final RwStrategy[] strategies = new RwStrategy[]{new T01_Synchronized(), new T02_StrategyRead(), new T03_StrategyWrite(), new T04_StrategyFair(), new T05_ReentrantLock(), new T06_RWLock(), new T07_RWLockFair(), new T08_CustomLock()};
 
@@ -23,8 +23,8 @@ public class ReadWriteTest {
 
     @Test
     public void testWriteScenarios() {
-        new TestRunner().testScenario(new C03_RWR(), strategies);
-        new TestRunner().testScenario(new C04_W$RW_R(), strategies);
+        new TestRunner().testScenario(new S03_RWR(), strategies);
+        new TestRunner().testScenario(new S04_W$RW_R(), strategies);
     }
 
     @Test

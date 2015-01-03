@@ -1,5 +1,6 @@
 package laxa.multithreading.framework;
 
+import javax.annotation.Nonnull;
 import java.util.Date;
 
 public final class TestRunner {
@@ -10,7 +11,7 @@ public final class TestRunner {
 		System.out.println();
 	}
 
-	public <S extends Strategy> Date test(Scenario<S> scenario, S strategy) {
+	public <S extends Strategy> Date test(@Nonnull Scenario<S> scenario, S strategy) {
 		Date start = new Date();
 
 		scenario.run(strategy);

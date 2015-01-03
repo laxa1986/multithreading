@@ -3,10 +3,14 @@ package laxa.multithreading.task.readwrite.strategy;
 import laxa.multithreading.framework.ThreadHelper;
 import laxa.multithreading.framework.characteristics.*;
 
+import javax.annotation.concurrent.GuardedBy;
+import javax.annotation.concurrent.ThreadSafe;
+
 /**
  * Author: Chekulaev Alexey
  * Date: 18.01.2012
  */
+@ThreadSafe
 @Throughput(Throughput.Value.MIDDLE)
 @WriteOrder(Fairness.UNFAIR_READ_OPTIMIZATION)
 @Case_R$WR(fairness = Fairness.UNFAIR_READ_OPTIMIZATION, value = "reader start read")
@@ -15,6 +19,7 @@ public class T02_StrategyRead implements RwStrategy {
 	private Object o;
 
 	private final Object rLock = new Object();
+	@GuardedBy("rLock")
 	private int rCnt = 0;
 
 	private void wait(Object o) {

@@ -1,9 +1,12 @@
 package laxa.multithreading.task.moneytransfer.model;
 
+import javax.annotation.concurrent.NotThreadSafe;
+
 /**
  * Author: Chekulaev Alexey
  * Date: 30.12.2014
  */
+@NotThreadSafe
 public class Account {
     private final long id;
     private Money money = new Money(0);

@@ -1,11 +1,16 @@
 package laxa.multithreading.task.moneytransfer.model;
 
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
+
 /**
  * Author: Chekulaev Alexey
  * Date: 30.12.2014
  */
+@Immutable
+@NotThreadSafe
 public class Money {
-    double value;
+    private final double value;
 
     public Money(double value) {
         this.value = value;

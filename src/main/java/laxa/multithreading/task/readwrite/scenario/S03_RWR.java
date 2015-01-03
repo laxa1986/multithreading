@@ -4,26 +4,26 @@ import laxa.multithreading.framework.FixedScenario;
 import laxa.multithreading.framework.characteristics.BestStrategy;
 import laxa.multithreading.task.readwrite.action.R;
 import laxa.multithreading.task.readwrite.action.W;
-import laxa.multithreading.task.readwrite.strategy.*;
+import laxa.multithreading.task.readwrite.strategy.RwStrategy;
+import laxa.multithreading.task.readwrite.strategy.T02_StrategyRead;
 
 /**
  * Author: Chekulaev Alexey
- * Date: 09.03.12
+ * Date: 08.03.12
  */
-@BestStrategy({T06_RWLock.class, T03_StrategyWrite.class, T04_StrategyFair.class, T07_RWLockFair.class})
-public class C05_W$WR_R extends FixedScenario<RwStrategy> {
+@BestStrategy(T02_StrategyRead.class)
+public class S03_RWR extends FixedScenario<RwStrategy> {
 	@Override
 	public int getFastest() {
-		return 300;
+		return 100 + 50 + 100;
 	}
 
 	@Override
 	public Action[] getActions() {
 		return new Action[]{
-				new W(0),
-				new W(20),
-				new R(50),
-				new R(150),
+				new R(0),
+				new W(25),
+				new R(50)
 		};
 	}
 }
