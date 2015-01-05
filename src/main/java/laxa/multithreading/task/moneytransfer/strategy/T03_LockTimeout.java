@@ -7,6 +7,7 @@ import laxa.multithreading.task.moneytransfer.model.Money;
 
 import javax.annotation.concurrent.ThreadSafe;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
@@ -18,7 +19,6 @@ import java.util.concurrent.locks.Lock;
 @WriteOrder(Fairness.UNFAIR)
 public class T03_LockTimeout implements TransferStrategy {
     private final LockHolder lockHolder = new LockHolder();
-    private final Random random = new Random(System.currentTimeMillis());
     private final int tryLockMaxTime;
 
     /**
@@ -32,6 +32,7 @@ public class T03_LockTimeout implements TransferStrategy {
     public void transfer(Account from, Account to, Money amount) {
         Lock lockFrom = lockHolder.getLock(from).writeLock();
         Lock lockTo = lockHolder.getLock(to).writeLock();
+        Random random = ThreadLocalRandom.current();
 
         lockFrom.lock();
         try {

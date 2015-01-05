@@ -14,7 +14,7 @@ import org.junit.Test;
 public class ReadWriteTest {
     private final Scenario[] scenarios = new Scenario[]{new S02_RR(), new S03_RWR(), new S04_W$RW_R(), new S05_W$WR_R(), new S06_R$WR_R(), new S07_R$WRW_R()};
 
-    private final RwStrategy[] strategies = new RwStrategy[]{new T01_Synchronized(), new T02_StrategyRead(), new T03_StrategyWrite(), new T04_StrategyFair(), new T05_ReentrantLock(), new T06_RWLock(), new T07_RWLockFair(), new T08_CustomLock()};
+    private final RwStrategy[] strategies = new RwStrategy[]{new T01_Synchronized(), new T02_StrategyRead(), new T03_StrategyWrite(), new T04_StrategyFair(), new T05_ReentrantLock(), new T06_RWLock(true/*fair*/), new T08_CustomLock(true/*fair*/)};
 
     @Test
     public void testT03_StrategyWrite() {
@@ -35,8 +35,7 @@ public class ReadWriteTest {
         new TestRunner().testStrategy(scenarios, new T03_StrategyWrite());
         new TestRunner().testStrategy(scenarios, new T04_StrategyFair());
         new TestRunner().testStrategy(scenarios, new T05_ReentrantLock());
-        new TestRunner().testStrategy(scenarios, new T06_RWLock());
-        new TestRunner().testStrategy(scenarios, new T07_RWLockFair());
-        new TestRunner().testStrategy(scenarios, new T08_CustomLock());
+        new TestRunner().testStrategy(scenarios, new T06_RWLock(true/*fair*/));
+        new TestRunner().testStrategy(scenarios, new T08_CustomLock(true/*fair*/));
     }
 }
