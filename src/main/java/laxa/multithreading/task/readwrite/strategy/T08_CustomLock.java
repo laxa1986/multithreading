@@ -14,12 +14,12 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 @ThreadSafe
 public class T08_CustomLock implements RwStrategy {
-	private volatile Object o;
+	private Object o;
 
 	private final Lock rLock;
 	private final Condition condition;
 	@GuardedBy("rLock")
-	private volatile int rCnt = 0; // this variable not in synchronized section
+	private int rCnt = 0; // this variable not in synchronized section
 
 	public T08_CustomLock(boolean fair) {
 		rLock = new ReentrantLock(fair);

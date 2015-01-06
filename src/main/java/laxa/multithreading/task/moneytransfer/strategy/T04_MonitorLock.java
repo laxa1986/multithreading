@@ -1,6 +1,7 @@
 package laxa.multithreading.task.moneytransfer.strategy;
 
 import laxa.multithreading.task.moneytransfer.model.Account;
+import laxa.multithreading.task.moneytransfer.model.AccountLocks;
 import laxa.multithreading.task.moneytransfer.model.Money;
 
 import javax.annotation.concurrent.ThreadSafe;
@@ -15,12 +16,12 @@ import java.util.concurrent.locks.Lock;
 @ThreadSafe
 public class T04_MonitorLock implements TransferStrategy {
     private final Object monitor = new Object();
-    private final LockHolder lockHolder = new LockHolder();
+    private final AccountLocks locks = new AccountLocks();
 
     @Override
     public void transfer(Account from, Account to, Money amount) {
-        Lock lockFrom = lockHolder.getLock(from).writeLock();
-        Lock lockTo = lockHolder.getLock(to).writeLock();
+        Lock lockFrom = locks.getRWLock(from).writeLock();
+        Lock lockTo = locks.getRWLock(to).writeLock();
 
         // exclude deadlocks
         synchronized (monitor) {
@@ -64,7 +65,7 @@ public class T04_MonitorLock implements TransferStrategy {
 
     @Override
     public Money getMoney(Account account) {
-        Lock lock = lockHolder.getLock(account).readLock();
+        Lock lock = locks.getRWLock(account).readLock();
 
         synchronized (monitor) {
             while (true) {

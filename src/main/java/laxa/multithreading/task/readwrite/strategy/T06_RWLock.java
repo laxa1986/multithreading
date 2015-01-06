@@ -23,7 +23,7 @@ public class T06_RWLock implements RwStrategy {
 	private final ReadWriteLock lock;
 
 	@GuardedBy("lock")
-	private volatile Object o;
+	private Object o;
 
 	public T06_RWLock(boolean fair) {
 		this.lock = new ReentrantReadWriteLock(fair);

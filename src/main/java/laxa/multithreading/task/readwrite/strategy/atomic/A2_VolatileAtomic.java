@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * Date: 29.01.12
  */
 public class A2_VolatileAtomic implements RwStrategy {
-	private volatile AtomicLong field;
+	private AtomicLong field;
 
 	@Override
 	public void write(Object o) {

@@ -5,7 +5,7 @@ package laxa.multithreading.task.readwrite.strategy.atomic;
  * Date: 29.01.12
  */
 public class A1_VolatilePrimitive {
-	private volatile int o;
+	private int o;
 //	byte o;
 //	boolean o;
 //	char o;

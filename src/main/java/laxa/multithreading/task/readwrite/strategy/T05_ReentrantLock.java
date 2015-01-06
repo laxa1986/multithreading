@@ -21,7 +21,7 @@ public class T05_ReentrantLock implements RwStrategy {
 
 	private final Lock lock = new ReentrantLock(false /* not fair */);
 	@GuardedBy("lock")
-	private volatile Object o;
+	private Object o;
 
 	@Override
 	public void write(Object o) {

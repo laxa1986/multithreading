@@ -14,3 +14,12 @@ hard cases:
 aux cases (rectangle):
 1 -> 2 -> 3 -> 1
 1 -> 2,3; 3 -> 2
+
+links:
+=============
+
+StampedLocks vs ReadWriteLocks
+http://blog.takipi.com/java-8-stampedlocks-vs-readwritelocks-and-synchronized/
+
+AtomicLong vs LongAdder
+http://blog.takipi.com/java-8-longadders-the-fastest-way-to-add-numbers-concurrently/

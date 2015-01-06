@@ -11,7 +11,7 @@ public class T09_StampedLock implements RwStrategy {
     private final StampedLock lock = new StampedLock();
 
     @GuardedBy("lock")
-    private volatile Object o;
+    private Object o;
 
     @Override
     public void write(Object o) {
