@@ -19,6 +19,10 @@ public class Account {
         return id;
     }
 
+    /**
+     * ThreadSafe as reading/writing references are atomic operation and Money itself is immutable
+     * @return money
+     */
     public Money getMoney() {
         return money;
     }
